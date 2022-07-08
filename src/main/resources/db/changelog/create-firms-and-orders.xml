@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="01" author="maksimmv">
+        <createTable tableName="firms"
+                     remarks="A table to contain all firms">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(75)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="phone" type="varchar(13)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="applications"
+                     remarks="A table to contain all the ?">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="order_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_price" type="decimal">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="car_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_driver_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="firm_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="applications" baseColumnNames="firm_id"
+                                 constraintName="firms_fk"
+                                 referencedTableName="firms" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
