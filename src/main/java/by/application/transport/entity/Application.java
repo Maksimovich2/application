@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -23,9 +25,11 @@ public class Application extends ParentEntity {
     private LocalDateTime orderTime;
 
     @Column(name = "order_price")
-    private LocalDateTime orderPrice;
+    private BigDecimal orderPrice;
 
     @Column(name = "status")
+    @ColumnTransformer(read = "UPPER(status)", write = "LOWER(?)")
+    @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
 
     @Column(name = "client_id")
@@ -37,7 +41,7 @@ public class Application extends ParentEntity {
     @Column(name = "user_driver_id")
     private Long userDriverId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "firm_id", referencedColumnName = "id")
     private Firm firm;
 }
