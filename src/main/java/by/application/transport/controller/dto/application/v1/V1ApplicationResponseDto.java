@@ -1,4 +1,4 @@
-package by.application.transport.controller.dto.application;
+package by.application.transport.controller.dto.application.v1;
 
 import by.application.transport.entity.ApplicationStatus;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @author Maksim Maksimovich
  */
 @Data
-public class ApplicationResponseDto {
+public class V1ApplicationResponseDto {
     private Long id;
     private LocalDateTime orderTime;
     private BigDecimal orderPrice;

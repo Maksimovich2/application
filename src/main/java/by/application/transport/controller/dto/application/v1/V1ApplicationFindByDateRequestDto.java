@@ -1,4 +1,4 @@
-package by.application.transport.controller.dto.application;
+package by.application.transport.controller.dto.application.v1;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * @author Maksim Maksimovich
  */
 @Data
-public class ApplicationFindByDateRequestDto {
+public class V1ApplicationFindByDateRequestDto {
 
     @PastOrPresent
     private LocalDateTime startDate;

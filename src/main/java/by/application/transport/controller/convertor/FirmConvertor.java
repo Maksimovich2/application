@@ -1,8 +1,9 @@
 package by.application.transport.controller.convertor;
 
-import by.application.transport.controller.dto.firm.FirmResponseDto;
-import by.application.transport.controller.dto.firm.FirmSaveDto;
-import by.application.transport.controller.dto.firm.FirmUpdateDto;
+import by.application.transport.controller.dto.firm.v1.V1FirmResponseByNameDto;
+import by.application.transport.controller.dto.firm.v1.V1FirmResponseDto;
+import by.application.transport.controller.dto.firm.v1.V1FirmSaveRequestDtoV1;
+import by.application.transport.controller.dto.firm.v1.V1FirmUpdateRequestDto;
 import by.application.transport.entity.Firm;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -23,17 +24,30 @@ public class FirmConvertor {
 
     public FirmConvertor() {
         modelMapper = new ModelMapper();
-        modelMapper.typeMap(FirmSaveDto.class, Firm.class)
+        modelMapper.typeMap(V1FirmSaveRequestDtoV1.class, Firm.class)
                 .setPostConverter(convertSaveDtoToEntity());
-        modelMapper.typeMap(FirmUpdateDto.class, Firm.class)
+        modelMapper.typeMap(V1FirmUpdateRequestDto.class, Firm.class)
                 .setPostConverter(convertUpdateDtoToEntity());
-        modelMapper.typeMap(Firm.class, FirmResponseDto.class)
+        modelMapper.typeMap(Firm.class, V1FirmResponseDto.class)
                 .setPostConverter(convertEntityToResponseDto());
+        modelMapper.typeMap(Firm.class, V1FirmResponseByNameDto.class)
+                .setPostConverter(convertEntityToResponseByNameDto());
     }
 
-    private Converter<Firm, FirmResponseDto> convertEntityToResponseDto() {
+    private Converter<Firm, V1FirmResponseByNameDto> convertEntityToResponseByNameDto() {
         return mappingContext -> {
-            FirmResponseDto destination = mappingContext.getDestination();
+            V1FirmResponseByNameDto destination = mappingContext.getDestination();
+            Firm source = mappingContext.getSource();
+            destination.setId(source.getId());
+            destination.setName(source.getName());
+            destination.setPhone(source.getPhone());
+            return destination;
+        };
+    }
+
+    private Converter<Firm, V1FirmResponseDto> convertEntityToResponseDto() {
+        return mappingContext -> {
+            V1FirmResponseDto destination = mappingContext.getDestination();
             Firm source = mappingContext.getSource();
             destination.setId(source.getId());
             destination.setName(source.getName());
@@ -46,9 +60,9 @@ public class FirmConvertor {
         };
     }
 
-    private Converter<FirmUpdateDto, Firm> convertUpdateDtoToEntity() {
+    private Converter<V1FirmUpdateRequestDto, Firm> convertUpdateDtoToEntity() {
         return mappingContext -> {
-            FirmUpdateDto source = mappingContext.getSource();
+            V1FirmUpdateRequestDto source = mappingContext.getSource();
             Firm destination = mappingContext.getDestination();
             destination.setId(source.getId());
             destination.setName(source.getName());
@@ -57,25 +71,29 @@ public class FirmConvertor {
         };
     }
 
-    private Converter<FirmSaveDto, Firm> convertSaveDtoToEntity() {
+    private Converter<V1FirmSaveRequestDtoV1, Firm> convertSaveDtoToEntity() {
         return mappingContext -> {
             Firm destination = mappingContext.getDestination();
-            FirmSaveDto source = mappingContext.getSource();
+            V1FirmSaveRequestDtoV1 source = mappingContext.getSource();
             destination.setName(source.getName());
             destination.setPhone(source.getPhone());
             return destination;
         };
     }
 
-    public Firm convertSaveDtoToEntity(FirmSaveDto firmSaveDto){
-        return modelMapper.map(firmSaveDto, Firm.class);
+    public Firm convertSaveDtoToEntity(V1FirmSaveRequestDtoV1 v1FirmSaveRequestDtoV1){
+        return modelMapper.map(v1FirmSaveRequestDtoV1, Firm.class);
     }
 
-    public Firm convertUpdateDtoToEntity(FirmUpdateDto firmUpdateDto){
-        return modelMapper.map(firmUpdateDto, Firm.class);
+    public Firm convertUpdateDtoToEntity(V1FirmUpdateRequestDto v1FirmUpdateRequestDto){
+        return modelMapper.map(v1FirmUpdateRequestDto, Firm.class);
     }
 
-    public FirmResponseDto convertEntityToResponseDto(Firm firm){
-        return modelMapper.map(firm, FirmResponseDto.class);
+    public V1FirmResponseDto convertEntityToResponseDto(Firm firm){
+        return modelMapper.map(firm, V1FirmResponseDto.class);
+    }
+
+    public V1FirmResponseByNameDto convertEntityToResponseByNameDto(Firm firm){
+        return modelMapper.map(firm, V1FirmResponseByNameDto.class);
     }
 }

@@ -1,4 +1,4 @@
-package by.application.transport.controller.dto.firm;
+package by.application.transport.controller.dto.firm.v1;
 
 import lombok.Data;
 
@@ -6,7 +6,8 @@ import lombok.Data;
  * @author Maksim Maksimovich
  */
 @Data
-public class FirmSaveDto {
+public class V1FirmResponseByNameDto {
+    private Long id;
     private String name;
     private String phone;
 }

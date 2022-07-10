@@ -1,9 +1,10 @@
-package by.application.transport.controller;
+package by.application.transport.controller.v1;
 
 import by.application.transport.controller.convertor.ApplicationConvertor;
-import by.application.transport.controller.dto.application.ApplicationFindByDateRequestDto;
-import by.application.transport.controller.dto.application.ApplicationResponseDto;
-import by.application.transport.controller.dto.application.ApplicationUpdateDto;
+import by.application.transport.controller.dto.application.v1.V1ApplicationFindByDateRequestDto;
+import by.application.transport.controller.dto.application.v1.V1ApplicationResponseDto;
+import by.application.transport.controller.dto.application.v1.V1ApplicationSaveRequestDto;
+import by.application.transport.controller.dto.application.v1.V1ApplicationUpdateRequestDto;
 import by.application.transport.service.ApplicationService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -23,24 +24,30 @@ import java.util.stream.Collectors;
 @Validated
 @RequiredArgsConstructor
 @SecurityRequirement(name = "application-api")
-@RequestMapping("/application")
+@RequestMapping("/applications")
 @Slf4j
-public class ApplicationController {
+public class V1ApplicationController {
     private final ApplicationService applicationService;
     private final ApplicationConvertor applicationConvertor;
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody @Valid ApplicationUpdateDto applicationUpdateDto) {
-        applicationService.update(applicationConvertor.convertUpdateDtoToEntity(applicationUpdateDto));
+    public ResponseEntity<Void> update(@RequestBody @Valid V1ApplicationUpdateRequestDto v1ApplicationUpdateRequestDto) {
+        applicationService.update(applicationConvertor.convertUpdateDtoToEntity(v1ApplicationUpdateRequestDto));
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/find-by-date")
-    public ResponseEntity<List<ApplicationResponseDto>> findByDate(@RequestBody @Valid ApplicationFindByDateRequestDto dto) {
+    public ResponseEntity<List<V1ApplicationResponseDto>> findByDate(@RequestBody @Valid V1ApplicationFindByDateRequestDto dto) {
         return ResponseEntity.ok(applicationService
                 .findByDate(dto.getStartDate(), dto.getFinishDate())
                 .stream()
                 .map(applicationConvertor::convertEntityToDtoResponse)
                 .collect(Collectors.toList()));
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> createNewApplication(@RequestBody @Valid V1ApplicationSaveRequestDto v1ApplicationSaveRequestDto) {
+        applicationService.save(applicationConvertor.convertSaveDtoToEntity(v1ApplicationSaveRequestDto));
+        return ResponseEntity.ok().build();
     }
 }

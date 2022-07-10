@@ -1,8 +1,8 @@
 package by.application.transport.controller.convertor;
 
-import by.application.transport.controller.dto.application.ApplicationResponseDto;
-import by.application.transport.controller.dto.application.ApplicationSaveDto;
-import by.application.transport.controller.dto.application.ApplicationUpdateDto;
+import by.application.transport.controller.dto.application.v1.V1ApplicationResponseDto;
+import by.application.transport.controller.dto.application.v1.V1ApplicationSaveRequestDto;
+import by.application.transport.controller.dto.application.v1.V1ApplicationUpdateRequestDto;
 import by.application.transport.entity.Application;
 import by.application.transport.entity.Firm;
 import org.modelmapper.Converter;
@@ -19,17 +19,17 @@ public class ApplicationConvertor {
     public ApplicationConvertor() {
         modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        modelMapper.typeMap(ApplicationSaveDto.class, Application.class)
+        modelMapper.typeMap(V1ApplicationSaveRequestDto.class, Application.class)
                 .setPostConverter(convertSaveDtoToEntity());
-        modelMapper.typeMap(ApplicationUpdateDto.class, Application.class)
+        modelMapper.typeMap(V1ApplicationUpdateRequestDto.class, Application.class)
                 .setPostConverter(convertUpdateDtoToEntity());
     }
 
 
-    private Converter<ApplicationUpdateDto, Application> convertUpdateDtoToEntity() {
+    private Converter<V1ApplicationUpdateRequestDto, Application> convertUpdateDtoToEntity() {
         return mappingContext -> {
             Application destination = mappingContext.getDestination();
-            ApplicationUpdateDto source = mappingContext.getSource();
+            V1ApplicationUpdateRequestDto source = mappingContext.getSource();
             destination.setId(source.getId());
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setOrderPrice(source.getOrderPrice());
@@ -44,10 +44,10 @@ public class ApplicationConvertor {
         };
     }
 
-    private Converter<ApplicationSaveDto, Application> convertSaveDtoToEntity() {
+    private Converter<V1ApplicationSaveRequestDto, Application> convertSaveDtoToEntity() {
         return mappingContext -> {
             Application destination = mappingContext.getDestination();
-            ApplicationSaveDto source = mappingContext.getSource();
+            V1ApplicationSaveRequestDto source = mappingContext.getSource();
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setOrderPrice(source.getOrderPrice());
             destination.setOrderTime(source.getOrderTime());
@@ -61,15 +61,15 @@ public class ApplicationConvertor {
         };
     }
 
-    public Application convertSaveDtoToEntity(ApplicationSaveDto applicationSaveDto) {
-        return modelMapper.map(applicationSaveDto, Application.class);
+    public Application convertSaveDtoToEntity(V1ApplicationSaveRequestDto v1ApplicationSaveRequestDto) {
+        return modelMapper.map(v1ApplicationSaveRequestDto, Application.class);
     }
 
-    public Application convertUpdateDtoToEntity(ApplicationUpdateDto applicationUpdateDto) {
-        return modelMapper.map(applicationUpdateDto, Application.class);
+    public Application convertUpdateDtoToEntity(V1ApplicationUpdateRequestDto v1ApplicationUpdateRequestDto) {
+        return modelMapper.map(v1ApplicationUpdateRequestDto, Application.class);
     }
 
-    public ApplicationResponseDto convertEntityToDtoResponse(Application application) {
-        return modelMapper.map(application, ApplicationResponseDto.class);
+    public V1ApplicationResponseDto convertEntityToDtoResponse(Application application) {
+        return modelMapper.map(application, V1ApplicationResponseDto.class);
     }
 }

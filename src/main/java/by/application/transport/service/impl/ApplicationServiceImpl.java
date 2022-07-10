@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Maksim Maksimovich
@@ -45,11 +44,6 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     @Transactional(readOnly = true)
     public List<Application> findByDate(LocalDateTime startDate, LocalDateTime finishDate) {
-        List<Application> applications = applicationRepository.findAll();
-        return applications
-                .stream()
-                .filter(application -> application.getOrderTime().isAfter(startDate)
-                        && application.getOrderTime().isBefore(finishDate))
-                .collect(Collectors.toList());
+        return applicationRepository.findApplicationByOrderTimeAfterAndOrderTimeBefore(startDate, finishDate);
     }
 }
