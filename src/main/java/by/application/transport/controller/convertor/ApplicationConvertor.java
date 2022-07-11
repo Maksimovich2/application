@@ -23,6 +23,24 @@ public class ApplicationConvertor {
                 .setPostConverter(convertSaveDtoToEntity());
         modelMapper.typeMap(V1ApplicationUpdateRequestDto.class, Application.class)
                 .setPostConverter(convertUpdateDtoToEntity());
+        modelMapper.typeMap(Application.class, V1ApplicationResponseDto.class)
+                .setPostConverter(convertEntityToDtoResponse());
+    }
+
+    private Converter<Application, V1ApplicationResponseDto> convertEntityToDtoResponse() {
+        return mappingContext -> {
+            Application source = mappingContext.getSource();
+            V1ApplicationResponseDto destination = mappingContext.getDestination();
+            destination.setApplicationStatus(source.getApplicationStatus());
+            destination.setId(source.getId());
+            destination.setOrderPrice(source.getOrderPrice());
+            destination.setOrderTime(source.getOrderTime().toLocalDate());
+            destination.setCarId(source.getCarId());
+            destination.setClientId(source.getClientId());
+            destination.setFirmId(source.getFirm().getId());
+            destination.setUserDriverId(source.getUserDriverId());
+            return destination;
+        };
     }
 
 
@@ -33,7 +51,6 @@ public class ApplicationConvertor {
             destination.setId(source.getId());
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setOrderPrice(source.getOrderPrice());
-            destination.setOrderTime(source.getOrderTime());
             Firm firm = new Firm();
             firm.setId(source.getFirmId());
             destination.setFirm(firm);
@@ -50,7 +67,6 @@ public class ApplicationConvertor {
             V1ApplicationSaveRequestDto source = mappingContext.getSource();
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setOrderPrice(source.getOrderPrice());
-            destination.setOrderTime(source.getOrderTime());
             Firm firm = new Firm();
             firm.setId(source.getFirmId());
             destination.setFirm(firm);

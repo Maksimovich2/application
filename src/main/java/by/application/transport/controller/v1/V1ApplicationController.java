@@ -1,7 +1,6 @@
 package by.application.transport.controller.v1;
 
 import by.application.transport.controller.convertor.ApplicationConvertor;
-import by.application.transport.controller.dto.application.v1.V1ApplicationFindByDateRequestDto;
 import by.application.transport.controller.dto.application.v1.V1ApplicationResponseDto;
 import by.application.transport.controller.dto.application.v1.V1ApplicationSaveRequestDto;
 import by.application.transport.controller.dto.application.v1.V1ApplicationUpdateRequestDto;
@@ -9,11 +8,13 @@ import by.application.transport.service.ApplicationService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,9 +38,13 @@ public class V1ApplicationController {
     }
 
     @GetMapping("/find-by-date")
-    public ResponseEntity<List<V1ApplicationResponseDto>> findByDate(@RequestBody @Valid V1ApplicationFindByDateRequestDto dto) {
+    public ResponseEntity<List<V1ApplicationResponseDto>> findByDate(
+            @RequestParam("startDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("finishDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate finishDate) {
         return ResponseEntity.ok(applicationService
-                .findByDate(dto.getStartDate(), dto.getFinishDate())
+                .findByDate(startDate, finishDate)
                 .stream()
                 .map(applicationConvertor::convertEntityToDtoResponse)
                 .collect(Collectors.toList()));

@@ -7,18 +7,13 @@ import org.hibernate.annotations.ColumnTransformer;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.PastOrPresent;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * @author Maksim Maksimovich
  */
 @Data
 public class V1ApplicationSaveRequestDto {
-
-    @PastOrPresent
-    private LocalDateTime orderTime;
 
     @DecimalMin(value = "0.1", message = "application price can't be less 0.1")
     private BigDecimal orderPrice;

@@ -10,5 +10,5 @@ import java.util.List;
  * @author Maksim Maksimovich
  */
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
-    List<Application> findApplicationByOrderTimeAfterAndOrderTimeBefore(LocalDateTime after, LocalDateTime before);
+    List<Application> findApplicationsByOrderTimeGreaterThanEqualAndOrderTimeLessThanEqual(LocalDateTime after, LocalDateTime before);
 }

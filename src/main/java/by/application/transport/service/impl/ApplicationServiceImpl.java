@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -23,6 +25,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     @Transactional
     public void save(Application application) {
+        application.setOrderTime(LocalDateTime.now());
         applicationRepository.save(application);
         log.info("application successfully saved");
     }
@@ -30,6 +33,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     @Transactional
     public void update(Application application) {
+        application.setOrderTime(LocalDateTime.now());
         applicationRepository.save(application);
         log.info("application successfully updated");
     }
@@ -43,7 +47,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Application> findByDate(LocalDateTime startDate, LocalDateTime finishDate) {
-        return applicationRepository.findApplicationByOrderTimeAfterAndOrderTimeBefore(startDate, finishDate);
+    public List<Application> findByDate(LocalDate startDate, LocalDate finishDate) {
+        return applicationRepository
+                .findApplicationsByOrderTimeGreaterThanEqualAndOrderTimeLessThanEqual(startDate.atStartOfDay(), finishDate.atTime(LocalTime.now()));
     }
 }
