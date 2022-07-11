@@ -34,7 +34,7 @@ public class ApplicationConvertor {
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setId(source.getId());
             destination.setOrderPrice(source.getOrderPrice());
-            destination.setOrderTime(source.getOrderTime());
+            destination.setOrderTime(source.getOrderTime().toLocalDate());
             destination.setCarId(source.getCarId());
             destination.setClientId(source.getClientId());
             destination.setFirmId(source.getFirm().getId());
@@ -51,7 +51,6 @@ public class ApplicationConvertor {
             destination.setId(source.getId());
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setOrderPrice(source.getOrderPrice());
-            destination.setOrderTime(source.getOrderTime());
             Firm firm = new Firm();
             firm.setId(source.getFirmId());
             destination.setFirm(firm);
@@ -68,7 +67,6 @@ public class ApplicationConvertor {
             V1ApplicationSaveRequestDto source = mappingContext.getSource();
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setOrderPrice(source.getOrderPrice());
-            destination.setOrderTime(source.getOrderTime());
             Firm firm = new Firm();
             firm.setId(source.getFirmId());
             destination.setFirm(firm);

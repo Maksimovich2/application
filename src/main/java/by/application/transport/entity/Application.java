@@ -1,6 +1,5 @@
 package by.application.transport.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,7 @@ import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @author Maksim Maksimovich
@@ -23,8 +22,7 @@ import java.time.LocalDate;
 public class Application extends ParentEntity {
 
     @Column(name = "order_time")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate orderTime;
+    private LocalDateTime orderTime;
 
     @Column(name = "order_price")
     private BigDecimal orderPrice;

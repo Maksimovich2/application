@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * @author Maksim Maksimovich
  */
+@org.springframework.context.annotation.Configuration
 @ComponentScan("by.application.transport")
 public class Configuration {
 
