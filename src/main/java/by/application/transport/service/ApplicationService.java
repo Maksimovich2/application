@@ -2,7 +2,7 @@ package by.application.transport.service;
 
 import by.application.transport.entity.Application;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -15,5 +15,5 @@ public interface ApplicationService {
 
     List<Application> findAll();
 
-    List<Application> findByDate(LocalDateTime startDate, LocalDateTime finishDate);
+    List<Application> findByDate(LocalDate startDate, LocalDate finishDate);
 }

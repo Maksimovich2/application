@@ -36,7 +36,7 @@ public class V1ApplicationController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/find-by-date")
+    @PostMapping("/find-by-date")
     public ResponseEntity<List<V1ApplicationResponseDto>> findByDate(@RequestBody @Valid V1ApplicationFindByDateRequestDto dto) {
         return ResponseEntity.ok(applicationService
                 .findByDate(dto.getStartDate(), dto.getFinishDate())
