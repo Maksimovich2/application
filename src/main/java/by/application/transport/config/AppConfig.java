@@ -1,17 +1,18 @@
-package by.application.transport.controller.config;
+package by.application.transport.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Maksim Maksimovich
  */
-@org.springframework.context.annotation.Configuration
+@Configuration
 @ComponentScan("by.application.transport")
-public class Configuration {
+public class AppConfig {
 
     @Bean
     public ObjectMapper serializingObjectMapper() {
