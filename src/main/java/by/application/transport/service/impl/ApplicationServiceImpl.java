@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -49,6 +48,6 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Transactional(readOnly = true)
     public List<Application> findByDate(LocalDate startDate, LocalDate finishDate) {
         return applicationRepository
-                .findApplicationsByOrderTimeGreaterThanEqualAndOrderTimeLessThanEqual(startDate.atStartOfDay(), finishDate.atTime(LocalTime.now()));
+                .findApplicationsByOrderTimeGreaterThanEqualAndOrderTimeLessThanEqual(startDate.atStartOfDay(), finishDate.atTime(23, 59));
     }
 }
