@@ -10,4 +10,6 @@ import java.util.Optional;
  */
 public interface FirmRepository extends JpaRepository<Firm, Long> {
     Optional<Firm> findFirmByName(String name);
+
+    Optional<Firm> findFirmByPhone(String phone);
 }

@@ -1,6 +1,7 @@
 package by.application.transport.service.impl;
 
 import by.application.transport.entity.Firm;
+import by.application.transport.exception.DataValidException;
 import by.application.transport.exception.NoDataFoundException;
 import by.application.transport.repository.FirmRepository;
 import by.application.transport.service.FirmService;
@@ -21,6 +22,7 @@ public class FirmServiceImpl implements FirmService {
     @Override
     @Transactional
     public void save(Firm firm) {
+        validNewFirmOnDuplicateData(firm);
         firmRepository.save(firm);
         log.info("firm successfully saved by: " + firm.getName() + " name");
     }
@@ -38,5 +40,16 @@ public class FirmServiceImpl implements FirmService {
         log.info("finding firm by: " + name + " name started");
         return firmRepository.findFirmByName(name)
                 .orElseThrow(() -> new NoDataFoundException("firm not found by: " + name));
+    }
+
+    private void validNewFirmOnDuplicateData(Firm firm) {
+        if (firmRepository.findFirmByName(firm.getName()).isPresent()) {
+            log.warn("this firm by name: " + firm.getName() + " already exists");
+            throw new DataValidException("firm already exists with same name");
+        }
+        if (firmRepository.findFirmByPhone(firm.getPhone()).isPresent()) {
+            log.warn("this firm by phone number: " + firm.getPhone() + " already exists");
+            throw new DataValidException("firm already exists with same phone number");
+        }
     }
 }
