@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnTransformer;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -23,8 +24,15 @@ public class V1ApplicationSaveRequestDto {
     @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
 
+    @NotNull(message = "field client cannot be null")
     private Long clientId;
+
+    @NotNull(message = "field car cannot be null")
     private Long carId;
+
+    @NotNull(message = "field user driver cannot be null")
     private Long userDriverId;
+
+    @NotNull(message = "field firm cannot be null")
     private UUID firmId;
 }
