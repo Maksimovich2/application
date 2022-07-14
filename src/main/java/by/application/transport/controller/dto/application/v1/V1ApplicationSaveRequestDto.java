@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
  * @author Maksim Maksimovich
@@ -25,5 +26,5 @@ public class V1ApplicationSaveRequestDto {
     private Long clientId;
     private Long carId;
     private Long userDriverId;
-    private Long firmId;
+    private UUID firmId;
 }

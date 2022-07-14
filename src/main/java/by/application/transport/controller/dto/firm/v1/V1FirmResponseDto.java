@@ -4,13 +4,14 @@ import by.application.transport.controller.dto.application.v1.V1ApplicationRespo
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Maksim Maksimovich
  */
 @Data
 public class V1FirmResponseDto {
-    private Long id;
+    private UUID id;
     private String name;
     private String phone;
     private List<V1ApplicationResponseDto> applications;

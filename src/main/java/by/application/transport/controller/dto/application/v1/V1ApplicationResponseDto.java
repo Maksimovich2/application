@@ -9,13 +9,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 /**
  * @author Maksim Maksimovich
  */
 @Data
 public class V1ApplicationResponseDto {
-    private Long id;
+    private UUID id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate orderTime;
@@ -29,5 +30,5 @@ public class V1ApplicationResponseDto {
     private Long clientId;
     private Long carId;
     private Long userDriverId;
-    private Long firmId;
+    private UUID firmId;
 }

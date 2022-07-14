@@ -1,6 +1,7 @@
 package by.application.transport.service.impl;
 
 import by.application.transport.entity.Application;
+import by.application.transport.exception.NoDataFoundException;
 import by.application.transport.repository.ApplicationRepository;
 import by.application.transport.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Maksim Maksimovich
@@ -49,5 +51,11 @@ public class ApplicationServiceImpl implements ApplicationService {
     public List<Application> findByDate(LocalDate startDate, LocalDate finishDate) {
         return applicationRepository
                 .findApplicationsByOrderTimeGreaterThanEqualAndOrderTimeLessThanEqual(startDate.atStartOfDay(), finishDate.atTime(23, 59));
+    }
+
+    @Override
+    public Application findByUuid(UUID uuid) {
+        return applicationRepository.findApplicationByUuid(uuid)
+                .orElseThrow(() -> new NoDataFoundException("application not found"));
     }
 }

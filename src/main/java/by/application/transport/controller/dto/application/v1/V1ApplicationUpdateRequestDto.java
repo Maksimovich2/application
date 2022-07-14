@@ -8,13 +8,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
  * @author Maksim Maksimovich
  */
 @Data
 public class V1ApplicationUpdateRequestDto {
-    private Long id;
+    private UUID id;
 
     @DecimalMin(value = "0.1", message = "application price can't be less 0.1")
     private BigDecimal orderPrice;
@@ -26,5 +27,5 @@ public class V1ApplicationUpdateRequestDto {
     private Long clientId;
     private Long carId;
     private Long userDriverId;
-    private Long firmId;
+    private UUID firmId;
 }

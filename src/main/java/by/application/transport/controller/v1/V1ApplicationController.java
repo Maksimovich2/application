@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +34,8 @@ public class V1ApplicationController {
 
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody @Valid V1ApplicationUpdateRequestDto v1ApplicationUpdateRequestDto) {
-        applicationService.update(applicationConvertor.convertUpdateDtoToEntity(v1ApplicationUpdateRequestDto));
+        applicationService.update(applicationConvertor
+                .convertUpdateDtoToEntity(v1ApplicationUpdateRequestDto));
         return ResponseEntity.ok().build();
     }
 
@@ -52,7 +54,14 @@ public class V1ApplicationController {
 
     @PostMapping
     public ResponseEntity<Void> createNewApplication(@RequestBody @Valid V1ApplicationSaveRequestDto v1ApplicationSaveRequestDto) {
-        applicationService.save(applicationConvertor.convertSaveDtoToEntity(v1ApplicationSaveRequestDto));
+        applicationService.save(applicationConvertor
+                .convertSaveDtoToEntity(v1ApplicationSaveRequestDto));
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/find-by-uuid")
+    public ResponseEntity<V1ApplicationResponseDto> findByUuid(@RequestParam UUID uuid){
+        return ResponseEntity.ok(applicationConvertor
+                .convertEntityToDtoResponse(applicationService.findByUuid(uuid)));
     }
 }

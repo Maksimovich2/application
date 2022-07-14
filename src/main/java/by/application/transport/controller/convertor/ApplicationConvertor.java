@@ -32,12 +32,12 @@ public class ApplicationConvertor {
             Application source = mappingContext.getSource();
             V1ApplicationResponseDto destination = mappingContext.getDestination();
             destination.setApplicationStatus(source.getApplicationStatus());
-            destination.setId(source.getId());
+            destination.setId(source.getUuid());
             destination.setOrderPrice(source.getOrderPrice());
             destination.setOrderTime(source.getOrderTime().toLocalDate());
             destination.setCarId(source.getCarId());
             destination.setClientId(source.getClientId());
-            destination.setFirmId(source.getFirm().getId());
+            destination.setFirmId(source.getFirm().getUuid());
             destination.setUserDriverId(source.getUserDriverId());
             return destination;
         };
@@ -48,11 +48,11 @@ public class ApplicationConvertor {
         return mappingContext -> {
             Application destination = mappingContext.getDestination();
             V1ApplicationUpdateRequestDto source = mappingContext.getSource();
-            destination.setId(source.getId());
+            destination.setUuid(source.getId());
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setOrderPrice(source.getOrderPrice());
             Firm firm = new Firm();
-            firm.setId(source.getFirmId());
+            firm.setUuid(source.getFirmId());
             destination.setFirm(firm);
             destination.setUserDriverId(source.getUserDriverId());
             destination.setClientId(source.getClientId());
@@ -68,7 +68,7 @@ public class ApplicationConvertor {
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setOrderPrice(source.getOrderPrice());
             Firm firm = new Firm();
-            firm.setId(source.getFirmId());
+            firm.setUuid(source.getFirmId());
             destination.setFirm(firm);
             destination.setUserDriverId(source.getUserDriverId());
             destination.setClientId(source.getClientId());

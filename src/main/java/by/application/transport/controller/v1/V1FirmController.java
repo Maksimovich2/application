@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 /**
  * @author Maksim Maksimovich
@@ -29,13 +30,15 @@ public class V1FirmController {
 
     @PostMapping
     public ResponseEntity<Void> saveNewFirm(@RequestBody @Valid V1FirmSaveRequestDtoV1 v1FirmSaveRequestDtoV1) {
-        firmService.save(firmConvertor.convertSaveDtoToEntity(v1FirmSaveRequestDtoV1));
+        firmService.save(firmConvertor
+                .convertSaveDtoToEntity(v1FirmSaveRequestDtoV1));
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<Void> updateInfoAboutFirm(@RequestBody @Valid V1FirmUpdateRequestDto v1FirmUpdateRequestDto){
-        firmService.update(firmConvertor.convertUpdateDtoToEntity(v1FirmUpdateRequestDto));
+        firmService.update(firmConvertor
+                .convertUpdateDtoToEntity(v1FirmUpdateRequestDto));
         return ResponseEntity.ok().build();
     }
 
@@ -44,5 +47,11 @@ public class V1FirmController {
         return ResponseEntity.ok(firmConvertor
                 .convertEntityToResponseByNameDto(firmService
                         .findByName(firmName)));
+    }
+
+    @GetMapping ("/find-by-uuid")
+    public ResponseEntity<V1FirmResponseByNameDto> findByUuid(@RequestParam UUID uuid){
+        return ResponseEntity.ok(firmConvertor
+                .convertEntityToResponseByNameDto(firmService.findByUuid(uuid)));
     }
 }

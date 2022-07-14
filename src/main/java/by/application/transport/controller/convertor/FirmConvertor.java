@@ -38,7 +38,7 @@ public class FirmConvertor {
         return mappingContext -> {
             V1FirmResponseByNameDto destination = mappingContext.getDestination();
             Firm source = mappingContext.getSource();
-            destination.setId(source.getId());
+            destination.setId(source.getUuid());
             destination.setName(source.getName());
             destination.setPhone(source.getPhone());
             return destination;
@@ -49,7 +49,7 @@ public class FirmConvertor {
         return mappingContext -> {
             V1FirmResponseDto destination = mappingContext.getDestination();
             Firm source = mappingContext.getSource();
-            destination.setId(source.getId());
+            destination.setId(source.getUuid());
             destination.setName(source.getName());
             destination.setPhone(source.getPhone());
             destination.setApplications(source.getApplications()
@@ -64,7 +64,7 @@ public class FirmConvertor {
         return mappingContext -> {
             V1FirmUpdateRequestDto source = mappingContext.getSource();
             Firm destination = mappingContext.getDestination();
-            destination.setId(source.getId());
+            destination.setUuid(source.getId());
             destination.setName(source.getName());
             destination.setPhone(source.getPhone());
             return destination;
