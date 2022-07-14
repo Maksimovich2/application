@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.beans.PropertyEditorSupport;
 import java.text.Format;
-import java.time.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -61,14 +61,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorDetails, headers, errorDetails.getStatus(), request);
     }
 
-    private ResponseEntity<CustomExceptionResponseDto> createResponseForCustomException(HttpStatus httpStatus, String message) {
-        CustomExceptionResponseDto customExceptionResponseDto = new CustomExceptionResponseDto();
-        customExceptionResponseDto.setStatus(httpStatus);
-        customExceptionResponseDto.setMessage(message);
-        customExceptionResponseDto.setTimestamp(System.currentTimeMillis());
-        return new ResponseEntity<>(customExceptionResponseDto, httpStatus);
-    }
-
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
         webDataBinder.registerCustomEditor(
@@ -81,8 +73,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static class Editor<T> extends PropertyEditorSupport {
 
         private final Function<String, T> parser;
-        private final Format format;
 
+        private final Format format;
         public Editor(Function<String, T> parser, Format format) {
 
             this.parser = parser;
@@ -98,5 +90,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
             return format.format((T) getValue());
         }
+
+    }
+    private ResponseEntity<CustomExceptionResponseDto> createResponseForCustomException(HttpStatus httpStatus, String message) {
+        CustomExceptionResponseDto customExceptionResponseDto = new CustomExceptionResponseDto();
+        customExceptionResponseDto.setStatus(httpStatus);
+        customExceptionResponseDto.setMessage(message);
+        customExceptionResponseDto.setTimestamp(System.currentTimeMillis());
+        return new ResponseEntity<>(customExceptionResponseDto, httpStatus);
     }
 }
