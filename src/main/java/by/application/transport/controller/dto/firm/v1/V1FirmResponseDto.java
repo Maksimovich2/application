@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 @Data
 public class V1FirmResponseDto {
-    private UUID id;
+    private UUID uuid;
     private String name;
     private String phone;
     private List<V1ApplicationResponseDto> applications;

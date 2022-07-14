@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 @Data
 public class V1FirmUpdateRequestDto {
-    private UUID id;
+    private UUID uuid;
 
     @NotBlank(message = "field name cannot be blank")
     @Size(min = 1)

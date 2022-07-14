@@ -1,6 +1,6 @@
 package by.application.transport.controller.v1;
 
-import by.application.transport.controller.convertor.ApplicationConvertor;
+import by.application.transport.controller.convertor.v1.V1ApplicationConvertor;
 import by.application.transport.controller.dto.application.v1.V1ApplicationResponseDto;
 import by.application.transport.controller.dto.application.v1.V1ApplicationSaveRequestDto;
 import by.application.transport.controller.dto.application.v1.V1ApplicationUpdateRequestDto;
@@ -30,11 +30,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class V1ApplicationController {
     private final ApplicationService applicationService;
-    private final ApplicationConvertor applicationConvertor;
+    private final V1ApplicationConvertor v1ApplicationConvertor;
 
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody @Valid V1ApplicationUpdateRequestDto v1ApplicationUpdateRequestDto) {
-        applicationService.update(applicationConvertor
+        applicationService.update(v1ApplicationConvertor
                 .convertUpdateDtoToEntity(v1ApplicationUpdateRequestDto));
         return ResponseEntity.ok().build();
     }
@@ -48,20 +48,20 @@ public class V1ApplicationController {
         return ResponseEntity.ok(applicationService
                 .findByDate(startDate, finishDate)
                 .stream()
-                .map(applicationConvertor::convertEntityToDtoResponse)
+                .map(v1ApplicationConvertor::convertEntityToDtoResponse)
                 .collect(Collectors.toList()));
     }
 
     @PostMapping
     public ResponseEntity<Void> createNewApplication(@RequestBody @Valid V1ApplicationSaveRequestDto v1ApplicationSaveRequestDto) {
-        applicationService.save(applicationConvertor
+        applicationService.save(v1ApplicationConvertor
                 .convertSaveDtoToEntity(v1ApplicationSaveRequestDto));
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/find-by-uuid")
     public ResponseEntity<V1ApplicationResponseDto> findByUuid(@RequestParam UUID uuid){
-        return ResponseEntity.ok(applicationConvertor
+        return ResponseEntity.ok(v1ApplicationConvertor
                 .convertEntityToDtoResponse(applicationService.findByUuid(uuid)));
     }
 }

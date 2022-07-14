@@ -16,7 +16,7 @@ import java.util.UUID;
  */
 @Data
 public class V1ApplicationResponseDto {
-    private UUID id;
+    private UUID uuid;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate orderTime;
@@ -27,8 +27,8 @@ public class V1ApplicationResponseDto {
     @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
 
-    private Long clientId;
-    private Long carId;
-    private Long userDriverId;
-    private UUID firmId;
+    private Long clientUuid;
+    private Long carUuid;
+    private Long userDriverUuid;
+    private UUID firmUuid;
 }

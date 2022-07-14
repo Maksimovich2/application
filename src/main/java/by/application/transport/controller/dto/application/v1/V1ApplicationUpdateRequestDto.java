@@ -26,14 +26,14 @@ public class V1ApplicationUpdateRequestDto {
     private ApplicationStatus applicationStatus;
 
     @NotNull(message = "field client cannot be null")
-    private Long clientId;
+    private Long clientUuid;
 
     @NotNull(message = "field car cannot be null")
-    private Long carId;
+    private Long carUuid;
 
     @NotNull(message = "field user driver cannot be null")
-    private Long userDriverId;
+    private Long userDriverUuid;
 
     @NotNull(message = "field firm cannot be null")
-    private UUID firmId;
+    private UUID firmUuid;
 }

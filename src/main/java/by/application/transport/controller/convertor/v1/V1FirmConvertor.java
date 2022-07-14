@@ -1,4 +1,4 @@
-package by.application.transport.controller.convertor;
+package by.application.transport.controller.convertor.v1;
 
 import by.application.transport.controller.dto.firm.v1.V1FirmResponseByNameDto;
 import by.application.transport.controller.dto.firm.v1.V1FirmResponseDto;
@@ -16,13 +16,13 @@ import java.util.stream.Collectors;
  * @author Maksim Maksimovich
  */
 @Component
-public class FirmConvertor {
+public class V1FirmConvertor {
     private final ModelMapper modelMapper;
 
     @Autowired
-    private ApplicationConvertor applicationConvertor;
+    private V1ApplicationConvertor v1ApplicationConvertor;
 
-    public FirmConvertor() {
+    public V1FirmConvertor() {
         modelMapper = new ModelMapper();
         modelMapper.typeMap(V1FirmSaveRequestDtoV1.class, Firm.class)
                 .setPostConverter(convertSaveDtoToEntity());
@@ -38,7 +38,7 @@ public class FirmConvertor {
         return mappingContext -> {
             V1FirmResponseByNameDto destination = mappingContext.getDestination();
             Firm source = mappingContext.getSource();
-            destination.setId(source.getUuid());
+            destination.setUuid(source.getUuid());
             destination.setName(source.getName());
             destination.setPhone(source.getPhone());
             return destination;
@@ -49,12 +49,12 @@ public class FirmConvertor {
         return mappingContext -> {
             V1FirmResponseDto destination = mappingContext.getDestination();
             Firm source = mappingContext.getSource();
-            destination.setId(source.getUuid());
+            destination.setUuid(source.getUuid());
             destination.setName(source.getName());
             destination.setPhone(source.getPhone());
             destination.setApplications(source.getApplications()
                     .stream()
-                    .map(applicationConvertor::convertEntityToDtoResponse)
+                    .map(v1ApplicationConvertor::convertEntityToDtoResponse)
                     .collect(Collectors.toList()));
             return destination;
         };
@@ -64,7 +64,7 @@ public class FirmConvertor {
         return mappingContext -> {
             V1FirmUpdateRequestDto source = mappingContext.getSource();
             Firm destination = mappingContext.getDestination();
-            destination.setUuid(source.getId());
+            destination.setUuid(source.getUuid());
             destination.setName(source.getName());
             destination.setPhone(source.getPhone());
             return destination;

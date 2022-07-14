@@ -9,7 +9,7 @@ import java.util.UUID;
  */
 @Data
 public class V1FirmResponseByNameDto {
-    private UUID id;
+    private UUID uuid;
     private String name;
     private String phone;
 }
