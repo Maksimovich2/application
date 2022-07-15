@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="02" author="maksimmv">
+        <sqlFile path="db/create-extension.sql"/>
+        <addColumn tableName="applications">
+            <column name="uuid_d" type="uuid" defaultValue="gen_random_uuid()">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addColumn tableName="firms">
+            <column name="uuid_d" type="uuid" defaultValue="gen_random_uuid()">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </addColumn>
+
+        <createIndex tableName="firms" indexName="uk_firms_uuid_d">
+            <column name="uuid_d"/>
+        </createIndex>
+
+        <createIndex tableName="applications" indexName="uk_applications_uuid_d">
+            <column name="uuid_d"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

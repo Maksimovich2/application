@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 /**
  * @author Maksim Maksimovich
  */
@@ -40,6 +42,12 @@ public class FirmServiceImpl implements FirmService {
         log.info("finding firm by: " + name + " name started");
         return firmRepository.findFirmByName(name)
                 .orElseThrow(() -> new NoDataFoundException("firm not found by: " + name));
+    }
+
+    @Override
+    public Firm findByUuid(UUID uuid) {
+        return firmRepository.findFirmByUuid(uuid)
+                .orElseThrow(() -> new NoDataFoundException("firm not found"));
     }
 
     private void validNewFirmOnDuplicateData(Firm firm) {

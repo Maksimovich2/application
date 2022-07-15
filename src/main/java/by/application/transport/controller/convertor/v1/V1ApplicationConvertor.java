@@ -1,4 +1,4 @@
-package by.application.transport.controller.convertor;
+package by.application.transport.controller.convertor.v1;
 
 import by.application.transport.controller.dto.application.v1.V1ApplicationResponseDto;
 import by.application.transport.controller.dto.application.v1.V1ApplicationSaveRequestDto;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
  * @author Maksim Maksimovich
  */
 @Component
-public class ApplicationConvertor {
+public class V1ApplicationConvertor {
     private final ModelMapper modelMapper;
 
-    public ApplicationConvertor() {
+    public V1ApplicationConvertor() {
         modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         modelMapper.typeMap(V1ApplicationSaveRequestDto.class, Application.class)
@@ -32,13 +32,13 @@ public class ApplicationConvertor {
             Application source = mappingContext.getSource();
             V1ApplicationResponseDto destination = mappingContext.getDestination();
             destination.setApplicationStatus(source.getApplicationStatus());
-            destination.setId(source.getId());
+            destination.setUuid(source.getUuid());
             destination.setOrderPrice(source.getOrderPrice());
             destination.setOrderTime(source.getOrderTime().toLocalDate());
-            destination.setCarId(source.getCarId());
-            destination.setClientId(source.getClientId());
-            destination.setFirmId(source.getFirm().getId());
-            destination.setUserDriverId(source.getUserDriverId());
+            destination.setCarUuid(source.getCarId());
+            destination.setClientUuid(source.getClientId());
+            destination.setFirmUuid(source.getFirm().getUuid());
+            destination.setUserDriverUuid(source.getUserDriverId());
             return destination;
         };
     }
@@ -48,15 +48,15 @@ public class ApplicationConvertor {
         return mappingContext -> {
             Application destination = mappingContext.getDestination();
             V1ApplicationUpdateRequestDto source = mappingContext.getSource();
-            destination.setId(source.getId());
+            destination.setUuid(source.getId());
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setOrderPrice(source.getOrderPrice());
             Firm firm = new Firm();
-            firm.setId(source.getFirmId());
+            firm.setUuid(source.getFirmUuid());
             destination.setFirm(firm);
-            destination.setUserDriverId(source.getUserDriverId());
-            destination.setClientId(source.getClientId());
-            destination.setCarId(source.getCarId());
+            destination.setUserDriverId(source.getUserDriverUuid());
+            destination.setClientId(source.getClientUuid());
+            destination.setCarId(source.getCarUuid());
             return destination;
         };
     }
@@ -68,11 +68,11 @@ public class ApplicationConvertor {
             destination.setApplicationStatus(source.getApplicationStatus());
             destination.setOrderPrice(source.getOrderPrice());
             Firm firm = new Firm();
-            firm.setId(source.getFirmId());
+            firm.setUuid(source.getFirmUuid());
             destination.setFirm(firm);
-            destination.setUserDriverId(source.getUserDriverId());
-            destination.setClientId(source.getClientId());
-            destination.setCarId(source.getCarId());
+            destination.setUserDriverId(source.getUserDriverUuid());
+            destination.setClientId(source.getClientUuid());
+            destination.setCarId(source.getCarUuid());
             return destination;
         };
     }

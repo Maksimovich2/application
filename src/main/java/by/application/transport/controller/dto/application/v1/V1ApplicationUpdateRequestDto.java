@@ -9,13 +9,14 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
  * @author Maksim Maksimovich
  */
 @Data
 public class V1ApplicationUpdateRequestDto {
-    private Long id;
+    private UUID id;
 
     @DecimalMin(value = "0.1", message = "application price can't be less 0.1")
     private BigDecimal orderPrice;
@@ -25,14 +26,14 @@ public class V1ApplicationUpdateRequestDto {
     private ApplicationStatus applicationStatus;
 
     @NotNull(message = "field client cannot be null")
-    private Long clientId;
+    private Long clientUuid;
 
     @NotNull(message = "field car cannot be null")
-    private Long carId;
+    private Long carUuid;
 
     @NotNull(message = "field user driver cannot be null")
-    private Long userDriverId;
+    private Long userDriverUuid;
 
     @NotNull(message = "field firm cannot be null")
-    private Long firmId;
+    private UUID firmUuid;
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 /**
  * @author Maksim Maksimovich
@@ -17,4 +18,7 @@ public abstract class ParentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "uuid_d")
+    private UUID uuid = UUID.randomUUID();
 }

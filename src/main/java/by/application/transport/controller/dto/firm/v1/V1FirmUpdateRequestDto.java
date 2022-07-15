@@ -6,13 +6,14 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 /**
  * @author Maksim Maksimovich
  */
 @Data
 public class V1FirmUpdateRequestDto {
-    private Long id;
+    private UUID uuid;
 
     @NotBlank(message = "field name cannot be blank")
     @Size(min = 1)
