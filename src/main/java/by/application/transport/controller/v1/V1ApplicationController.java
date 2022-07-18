@@ -39,7 +39,7 @@ public class V1ApplicationController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/find-by-date")
+    @GetMapping
     public ResponseEntity<List<V1ApplicationResponseDto>> findByDate(
             @RequestParam("startDate")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -59,8 +59,8 @@ public class V1ApplicationController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/find-by-uuid")
-    public ResponseEntity<V1ApplicationResponseDto> findByUuid(@RequestParam UUID uuid){
+    @GetMapping("/{uuid}")
+    public ResponseEntity<V1ApplicationResponseDto> findByUuid(@PathVariable UUID uuid){
         return ResponseEntity.ok(v1ApplicationConvertor
                 .convertEntityToDtoResponse(applicationService.findByUuid(uuid)));
     }

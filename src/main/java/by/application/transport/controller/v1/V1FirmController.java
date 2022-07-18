@@ -42,15 +42,15 @@ public class V1FirmController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/find-by-name")
+    @GetMapping
     public ResponseEntity<V1FirmResponseByNameDto> findByName(@RequestParam String firmName){
         return ResponseEntity.ok(v1FirmConvertor
                 .convertEntityToResponseByNameDto(firmService
                         .findByName(firmName)));
     }
 
-    @GetMapping ("/find-by-uuid")
-    public ResponseEntity<V1FirmResponseByNameDto> findByUuid(@RequestParam UUID uuid){
+    @GetMapping ("/{uuid}")
+    public ResponseEntity<V1FirmResponseByNameDto> findByUuid(@PathVariable UUID uuid){
         return ResponseEntity.ok(v1FirmConvertor
                 .convertEntityToResponseByNameDto(firmService.findByUuid(uuid)));
     }
