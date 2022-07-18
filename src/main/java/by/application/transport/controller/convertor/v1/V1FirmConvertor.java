@@ -24,25 +24,8 @@ public class V1FirmConvertor {
 
     public V1FirmConvertor() {
         modelMapper = new ModelMapper();
-        modelMapper.typeMap(V1FirmSaveRequestDtoV1.class, Firm.class)
-                .setPostConverter(convertSaveDtoToEntity());
-        modelMapper.typeMap(V1FirmUpdateRequestDto.class, Firm.class)
-                .setPostConverter(convertUpdateDtoToEntity());
         modelMapper.typeMap(Firm.class, V1FirmResponseDto.class)
                 .setPostConverter(convertEntityToResponseDto());
-        modelMapper.typeMap(Firm.class, V1FirmResponseByNameDto.class)
-                .setPostConverter(convertEntityToResponseByNameDto());
-    }
-
-    private Converter<Firm, V1FirmResponseByNameDto> convertEntityToResponseByNameDto() {
-        return mappingContext -> {
-            V1FirmResponseByNameDto destination = mappingContext.getDestination();
-            Firm source = mappingContext.getSource();
-            destination.setUuid(source.getUuid());
-            destination.setName(source.getName());
-            destination.setPhone(source.getPhone());
-            return destination;
-        };
     }
 
     private Converter<Firm, V1FirmResponseDto> convertEntityToResponseDto() {
@@ -56,27 +39,6 @@ public class V1FirmConvertor {
                     .stream()
                     .map(v1ApplicationConvertor::convertEntityToDtoResponse)
                     .collect(Collectors.toList()));
-            return destination;
-        };
-    }
-
-    private Converter<V1FirmUpdateRequestDto, Firm> convertUpdateDtoToEntity() {
-        return mappingContext -> {
-            V1FirmUpdateRequestDto source = mappingContext.getSource();
-            Firm destination = mappingContext.getDestination();
-            destination.setUuid(source.getUuid());
-            destination.setName(source.getName());
-            destination.setPhone(source.getPhone());
-            return destination;
-        };
-    }
-
-    private Converter<V1FirmSaveRequestDtoV1, Firm> convertSaveDtoToEntity() {
-        return mappingContext -> {
-            Firm destination = mappingContext.getDestination();
-            V1FirmSaveRequestDtoV1 source = mappingContext.getSource();
-            destination.setName(source.getName());
-            destination.setPhone(source.getPhone());
             return destination;
         };
     }
