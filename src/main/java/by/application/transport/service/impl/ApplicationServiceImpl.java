@@ -40,6 +40,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Transactional
     public void update(Application application) {
         application.setOrderTime(LocalDateTime.now());
+        Firm firm = firmService.findByUuid(application.getFirm().getUuid());
+        application.setFirm(firm);
         applicationRepository.save(application);
         log.info("application successfully updated");
     }
