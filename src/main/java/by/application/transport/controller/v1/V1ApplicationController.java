@@ -35,7 +35,7 @@ public class V1ApplicationController {
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody @Valid V1ApplicationUpdateRequestDto v1ApplicationUpdateRequestDto) {
         applicationService.update(v1ApplicationConvertor
-                .convertUpdateDtoToEntity(v1ApplicationUpdateRequestDto));
+                .convertUpdateDtoToServiceUpdateDto(v1ApplicationUpdateRequestDto));
         return ResponseEntity.ok().build();
     }
 
@@ -48,20 +48,20 @@ public class V1ApplicationController {
         return ResponseEntity.ok(applicationService
                 .findByDate(startDate, finishDate)
                 .stream()
-                .map(v1ApplicationConvertor::convertEntityToDtoResponse)
+                .map(v1ApplicationConvertor::convertServiceResponseDtoToResponseDto)
                 .collect(Collectors.toList()));
     }
 
     @PostMapping
     public ResponseEntity<Void> createNewApplication(@RequestBody @Valid V1ApplicationSaveRequestDto v1ApplicationSaveRequestDto) {
         applicationService.save(v1ApplicationConvertor
-                .convertSaveDtoToEntity(v1ApplicationSaveRequestDto));
+                .convertSaveDtoToServiceSaveDto(v1ApplicationSaveRequestDto));
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{uuid}")
     public ResponseEntity<V1ApplicationResponseDto> findByUuid(@PathVariable UUID uuid){
         return ResponseEntity.ok(v1ApplicationConvertor
-                .convertEntityToDtoResponse(applicationService.findByUuid(uuid)));
+                .convertServiceResponseDtoToResponseDto(applicationService.findByUuid(uuid)));
     }
 }

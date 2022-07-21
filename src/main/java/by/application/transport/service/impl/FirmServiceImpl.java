@@ -5,6 +5,10 @@ import by.application.transport.exception.DataValidException;
 import by.application.transport.exception.NoDataFoundException;
 import by.application.transport.repository.FirmRepository;
 import by.application.transport.service.FirmService;
+import by.application.transport.service.convertor.FirmConvertor;
+import by.application.transport.service.dto.firm.FirmResponseByNameDto;
+import by.application.transport.service.dto.firm.FirmSaveRequestDto;
+import by.application.transport.service.dto.firm.FirmUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,34 +24,37 @@ import java.util.UUID;
 @Slf4j
 public class FirmServiceImpl implements FirmService {
     private final FirmRepository firmRepository;
+    private final FirmConvertor firmConvertor;
 
     @Override
     @Transactional
-    public void save(Firm firm) {
-        validNewFirmOnDuplicateData(firm);
-        firmRepository.save(firm);
-        log.info("firm successfully saved by: " + firm.getName() + " name");
+    public void save(FirmSaveRequestDto firmDto) {
+        validNewFirmOnDuplicateData(firmConvertor.convertSaveDtoToEntity(firmDto));
+        firmRepository.save(firmConvertor.convertSaveDtoToEntity(firmDto));
+        log.info("firm successfully saved by: " + firmDto.getName() + " name");
     }
 
     @Override
     @Transactional
-    public void update(Firm firm) {
-        firmRepository.save(firm);
-        log.info("firm successfully updated by: " + firm.getName() + " name");
+    public void update(FirmUpdateRequestDto firmDto) {
+        firmRepository.save(firmConvertor.convertUpdateDtoToEntity(firmDto));
+        log.info("firm successfully updated by: " + firmDto.getName() + " name");
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Firm findByName(String name) {
+    public FirmResponseByNameDto findByName(String name) {
         log.info("finding firm by: " + name + " name started");
-        return firmRepository.findFirmByName(name)
-                .orElseThrow(() -> new NoDataFoundException("firm not found by: " + name));
+        return firmConvertor
+                .convertEntityToResponseDtoByName(firmRepository.findFirmByName(name)
+                .orElseThrow(() -> new NoDataFoundException("firm not found by: " + name)));
     }
 
     @Override
-    public Firm findByUuid(UUID uuid) {
-        return firmRepository.findFirmByUuid(uuid)
-                .orElseThrow(() -> new NoDataFoundException("firm not found"));
+    public FirmResponseByNameDto findByUuid(UUID uuid) {
+        return firmConvertor
+                .convertEntityToResponseDtoByName(firmRepository.findFirmByUuid(uuid)
+                .orElseThrow(() -> new NoDataFoundException("firm not found")));
     }
 
     private void validNewFirmOnDuplicateData(Firm firm) {

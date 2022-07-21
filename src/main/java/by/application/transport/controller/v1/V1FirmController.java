@@ -29,16 +29,16 @@ public class V1FirmController {
     private final V1FirmConvertor v1FirmConvertor;
 
     @PostMapping
-    public ResponseEntity<Void> saveNewFirm(@RequestBody @Valid V1FirmSaveRequestDtoV1 v1FirmSaveRequestDtoV1) {
+    public ResponseEntity<Void> saveNewFirm(@RequestBody @Valid V1FirmSaveRequestDtoV1 v1FirmSaveRequestDto) {
         firmService.save(v1FirmConvertor
-                .convertSaveDtoToEntity(v1FirmSaveRequestDtoV1));
+                .convertSaveDtoToServiceDto(v1FirmSaveRequestDto));
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<Void> updateInfoAboutFirm(@RequestBody @Valid V1FirmUpdateRequestDto v1FirmUpdateRequestDto){
         firmService.update(v1FirmConvertor
-                .convertUpdateDtoToEntity(v1FirmUpdateRequestDto));
+                .convertUpdateDtoToServiceDto(v1FirmUpdateRequestDto));
         return ResponseEntity.ok().build();
     }
 

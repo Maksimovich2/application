@@ -9,6 +9,7 @@ import org.hibernate.annotations.ColumnTransformer;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * @author Maksim Maksimovich
@@ -33,13 +34,13 @@ public class Application extends ParentEntity {
     private ApplicationStatus applicationStatus;
 
     @Column(name = "client_id")
-    private Long clientId;
+    private UUID clientId;
 
     @Column(name = "car_id")
-    private Long carId;
+    private UUID carId;
 
     @Column(name = "user_driver_id")
-    private Long userDriverId;
+    private UUID userDriverId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "firm_id", referencedColumnName = "id")

@@ -27,8 +27,8 @@ public class V1ApplicationResponseDto {
     @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
 
-    private Long clientUuid;
-    private Long carUuid;
-    private Long userDriverUuid;
+    private UUID clientUuid;
+    private UUID carUuid;
+    private UUID userDriverUuid;
     private UUID firmUuid;
 }

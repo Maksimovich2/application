@@ -1,6 +1,8 @@
 package by.application.transport.service;
 
-import by.application.transport.entity.Firm;
+import by.application.transport.service.dto.firm.FirmResponseByNameDto;
+import by.application.transport.service.dto.firm.FirmSaveRequestDto;
+import by.application.transport.service.dto.firm.FirmUpdateRequestDto;
 
 import java.util.UUID;
 
@@ -8,11 +10,11 @@ import java.util.UUID;
  * @author Maksim Maksimovich
  */
 public interface FirmService {
-    void save(Firm firm);
+    void save(FirmSaveRequestDto firmDto);
 
-    void update(Firm firm);
+    void update(FirmUpdateRequestDto firmDto);
 
-    Firm findByName(String name);
+    FirmResponseByNameDto findByName(String name);
 
-    Firm findByUuid(UUID uuid);
+    FirmResponseByNameDto findByUuid(UUID uuid);
 }

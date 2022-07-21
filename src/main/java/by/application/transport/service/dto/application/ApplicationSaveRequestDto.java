@@ -1,4 +1,4 @@
-package by.application.transport.controller.dto.application.v1;
+package by.application.transport.service.dto.application;
 
 import by.application.transport.entity.ApplicationStatus;
 import lombok.Data;
@@ -15,8 +15,7 @@ import java.util.UUID;
  * @author Maksim Maksimovich
  */
 @Data
-public class V1ApplicationUpdateRequestDto {
-    private UUID id;
+public class ApplicationSaveRequestDto {
 
     @DecimalMin(value = "0.1", message = "application price can't be less 0.1")
     private BigDecimal orderPrice;

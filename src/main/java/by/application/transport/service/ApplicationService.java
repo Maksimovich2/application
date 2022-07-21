@@ -1,6 +1,8 @@
 package by.application.transport.service;
 
-import by.application.transport.entity.Application;
+import by.application.transport.service.dto.application.ApplicationResponseDto;
+import by.application.transport.service.dto.application.ApplicationSaveRequestDto;
+import by.application.transport.service.dto.application.ApplicationUpdateRequestDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,13 +12,13 @@ import java.util.UUID;
  * @author Maksim Maksimovich
  */
 public interface ApplicationService {
-    void save(Application application);
+    void save(ApplicationSaveRequestDto applicationDto);
 
-    void update(Application application);
+    void update(ApplicationUpdateRequestDto applicationDto);
 
-    List<Application> findAll();
+    List<ApplicationResponseDto> findAll();
 
-    List<Application> findByDate(LocalDate startDate, LocalDate finishDate);
+    List<ApplicationResponseDto> findByDate(LocalDate startDate, LocalDate finishDate);
 
-    Application findByUuid(UUID uuid);
+    ApplicationResponseDto findByUuid(UUID uuid);
 }
