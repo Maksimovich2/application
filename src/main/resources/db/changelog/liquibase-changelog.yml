@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/create-firms-and-orders.xml
   - include:
       file: db/changelog/create-column-uuid-and-index.xml
+  - include:
+      file: db/changelog/modify-column-type-in-application-table.xml

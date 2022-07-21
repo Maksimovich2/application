@@ -25,13 +25,13 @@ public class V1ApplicationSaveRequestDto {
     private ApplicationStatus applicationStatus;
 
     @NotNull(message = "field client cannot be null")
-    private Long clientUuid;
+    private UUID clientUuid;
 
     @NotNull(message = "field car cannot be null")
-    private Long carUuid;
+    private UUID carUuid;
 
     @NotNull(message = "field user driver cannot be null")
-    private Long userDriverUuid;
+    private UUID userDriverUuid;
 
     @NotNull(message = "field firm cannot be null")
     private UUID firmUuid;

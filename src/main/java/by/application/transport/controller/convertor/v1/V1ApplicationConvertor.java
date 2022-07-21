@@ -3,9 +3,9 @@ package by.application.transport.controller.convertor.v1;
 import by.application.transport.controller.dto.application.v1.V1ApplicationResponseDto;
 import by.application.transport.controller.dto.application.v1.V1ApplicationSaveRequestDto;
 import by.application.transport.controller.dto.application.v1.V1ApplicationUpdateRequestDto;
-import by.application.transport.entity.Application;
-import by.application.transport.entity.Firm;
-import org.modelmapper.Converter;
+import by.application.transport.service.dto.application.ApplicationResponseDto;
+import by.application.transport.service.dto.application.ApplicationSaveRequestDto;
+import by.application.transport.service.dto.application.ApplicationUpdateRequestDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -19,55 +19,17 @@ public class V1ApplicationConvertor {
     public V1ApplicationConvertor() {
         modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        modelMapper.typeMap(V1ApplicationSaveRequestDto.class, Application.class)
-                .setPostConverter(convertSaveDtoToEntity());
-        modelMapper.typeMap(V1ApplicationUpdateRequestDto.class, Application.class)
-                .setPostConverter(convertUpdateDtoToEntity());
     }
 
-
-    private Converter<V1ApplicationUpdateRequestDto, Application> convertUpdateDtoToEntity() {
-        return mappingContext -> {
-            Application destination = mappingContext.getDestination();
-            V1ApplicationUpdateRequestDto source = mappingContext.getSource();
-            destination.setUuid(source.getId());
-            destination.setApplicationStatus(source.getApplicationStatus());
-            destination.setOrderPrice(source.getOrderPrice());
-            Firm firm = new Firm();
-            firm.setUuid(source.getFirmUuid());
-            destination.setFirm(firm);
-            destination.setUserDriverId(source.getUserDriverUuid());
-            destination.setClientId(source.getClientUuid());
-            destination.setCarId(source.getCarUuid());
-            return destination;
-        };
+    public ApplicationSaveRequestDto convertSaveDtoToServiceSaveDto(V1ApplicationSaveRequestDto v1ApplicationSaveRequestDto) {
+        return modelMapper.map(v1ApplicationSaveRequestDto, ApplicationSaveRequestDto.class);
     }
 
-    private Converter<V1ApplicationSaveRequestDto, Application> convertSaveDtoToEntity() {
-        return mappingContext -> {
-            Application destination = mappingContext.getDestination();
-            V1ApplicationSaveRequestDto source = mappingContext.getSource();
-            destination.setApplicationStatus(source.getApplicationStatus());
-            destination.setOrderPrice(source.getOrderPrice());
-            Firm firm = new Firm();
-            firm.setUuid(source.getFirmUuid());
-            destination.setFirm(firm);
-            destination.setUserDriverId(source.getUserDriverUuid());
-            destination.setClientId(source.getClientUuid());
-            destination.setCarId(source.getCarUuid());
-            return destination;
-        };
+    public ApplicationUpdateRequestDto convertUpdateDtoToServiceUpdateDto(V1ApplicationUpdateRequestDto v1ApplicationUpdateRequestDto) {
+        return modelMapper.map(v1ApplicationUpdateRequestDto, ApplicationUpdateRequestDto.class);
     }
 
-    public Application convertSaveDtoToEntity(V1ApplicationSaveRequestDto v1ApplicationSaveRequestDto) {
-        return modelMapper.map(v1ApplicationSaveRequestDto, Application.class);
-    }
-
-    public Application convertUpdateDtoToEntity(V1ApplicationUpdateRequestDto v1ApplicationUpdateRequestDto) {
-        return modelMapper.map(v1ApplicationUpdateRequestDto, Application.class);
-    }
-
-    public V1ApplicationResponseDto convertEntityToDtoResponse(Application application) {
+    public V1ApplicationResponseDto convertServiceResponseDtoToResponseDto(ApplicationResponseDto application) {
         return modelMapper.map(application, V1ApplicationResponseDto.class);
     }
 }
